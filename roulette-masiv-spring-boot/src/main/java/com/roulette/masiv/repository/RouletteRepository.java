@@ -59,7 +59,6 @@ public class RouletteRepository implements IRoulettleRepository{
 
 	@Override
 	public Map<String, Roulette> findAllRoulettes() {
-		System.out.println(hashOperatations.entries(KEY_ROULETTE));
 		return hashOperatations.entries(KEY_ROULETTE);
 	}
 

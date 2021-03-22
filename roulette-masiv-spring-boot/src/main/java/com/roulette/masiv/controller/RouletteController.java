@@ -20,13 +20,7 @@ public class RouletteController {
 	private RouletteRepository rouletteRepository;
 	
 	public RouletteController(RouletteRepository rouletteReposotory) {
-		System.out.println("Aqui");
 		this.rouletteRepository=rouletteReposotory;
-	}
-	
-	@GetMapping("/roulettes")
-	public Map<String, Roulette> findAllRoulettes(){
-		return rouletteRepository.findAllRoulettes();
 	}
 	
 	@PostMapping("/createRoulette")
@@ -48,5 +42,10 @@ public class RouletteController {
 	@GetMapping("/bets")
 	public Map<String,Bet> findAllBets(){
 		return rouletteRepository.findAllBets();
+	}
+	
+	@GetMapping("/roulettes")
+	public Map<String, Roulette> findAllRoulettes(){
+		return rouletteRepository.findAllRoulettes();
 	}
 }
