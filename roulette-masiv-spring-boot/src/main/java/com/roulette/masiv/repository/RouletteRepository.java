@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -48,13 +50,18 @@ public class RouletteRepository implements IRouletteRepository{
 	    return status;
 	}
 	
+	private static Logger l = LoggerFactory.getLogger(RouletteRepository.class);
+	
 	@Override
 	public void doBet(Bet bet) {
 		Roulette roulette = (Roulette) hashOperations.get(KEY_ROULETTE, bet.getIdRoulette());
-		if(bet.doBet(roulette))
+		if(bet.doBet(roulette)) {
+			l.info("entroooo");
+			roulette.setAmountMoneyBet(roulette.getAmountMoneyBet()+bet.getMoneyBet());
 			roulette.saveBet(bet);
 			hashOperations.put(KEY_ROULETTE,bet.getIdRoulette(), roulette);
 			saveBet(bet);
+		}
 	}
 	
 	@Override

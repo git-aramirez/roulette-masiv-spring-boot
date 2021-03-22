@@ -1,8 +1,14 @@
 package com.roulette.masiv.domain;
 
+import java.io.Serializable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.HashOperations;
 
-public class Bet {
+import com.roulette.masiv.repository.RouletteRepository;
+
+public class Bet implements Serializable{
 	
 	private static final String BLACK_COLOR = "black";
 	private static final String RED_COLOR ="red";
@@ -12,33 +18,30 @@ public class Bet {
 	private String idUser;
 	private double moneyBet;
 	
+	private static Logger l = LoggerFactory.getLogger(Bet.class);
 	
 	public boolean doBet(Roulette roulette) {
-		if(roulette!=null && isNumberBetValid() && isColorBetValid() && isValidAmountMoney(roulette)) {
-			return true;
-		}
 		
-		return false;
+		boolean a = roulette!=null;
+		l.info("roulette != null "+a);
+		l.info("isNumberBetValid "+isNumberBetValid());
+		l.info("isColorBetValid "+isColorBetValid());
+		l.info("isValidAmountMoney "+isValidAmountMoney(roulette));
+		
+		return roulette!=null && isNumberBetValid() && isColorBetValid() && isValidAmountMoney(roulette);
 	}
 	
 	public boolean isValidAmountMoney(Roulette roulette) {
-		if( (roulette.getAmountMoneyBet() + moneyBet) > Roulette.MAXIMUN_BET_VALUE )
-			return false;
-		return true;
-		
+		return ((roulette.getAmountMoneyBet() + moneyBet) <= Roulette.MAXIMUN_BET_VALUE );	
 	}
 	
 	public boolean isColorBetValid() {
-		if(color.equalsIgnoreCase(BLACK_COLOR) || color.equalsIgnoreCase(BLACK_COLOR))
-			return true;
-		return false;
+		return color.equalsIgnoreCase(RED_COLOR) || color.equalsIgnoreCase(BLACK_COLOR);
 	}
 	
 	
 	public boolean isNumberBetValid() {
-		if(number>=0 && number<=36)
-			return true;
-		return false;
+		return number>=0 && number<=36;
 	}
 	
 	public String getIdRoulette() {
