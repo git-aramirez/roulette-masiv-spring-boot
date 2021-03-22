@@ -38,6 +38,11 @@ public class RouletteController {
 		rouletteRepository.doBet(bet);
 	}
 	
+	@GetMapping("/closeBets/{idRoulette}")
+	public Map<String,Bet> closeBets(@PathVariable String idRoulette){
+		return rouletteRepository.closeBets(idRoulette);
+	}
+	
 	@GetMapping("/bets")
 	public Map<String,Bet> findAllBets(){
 		return rouletteRepository.findAllBets();

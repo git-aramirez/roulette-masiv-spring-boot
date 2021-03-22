@@ -50,7 +50,6 @@ public class RouletteRepository implements IRouletteRepository{
 	    return status;
 	}
 	
-	private static Logger l = LoggerFactory.getLogger(RouletteRepository.class);
 	
 	@Override
 	public void doBet(Bet bet) {
@@ -65,6 +64,17 @@ public class RouletteRepository implements IRouletteRepository{
 	public void saveBet(Bet bet) {
 		hashOperations.put(KEY_BET,UUID.randomUUID().toString(), bet);
 	}
+	
+	
+	@Override
+	public Map<String, Bet> closeBets(String idRoulette) {
+		Roulette roulette = (Roulette) hashOperations.get(KEY_ROULETTE,idRoulette);
+		roulette.closeBets();
+		hashOperations.put(KEY_ROULETTE,idRoulette, roulette);
+		
+		
+		return hashOperations.entries(KEY_BET);
+	}
 
 	@Override
 	public Map<String, Bet> findAllBets() {
@@ -75,6 +85,7 @@ public class RouletteRepository implements IRouletteRepository{
 	public Map<String, Roulette> findAllRoulettes() {
 		return hashOperations.entries(KEY_ROULETTE);
 	}
+
 
 	
 

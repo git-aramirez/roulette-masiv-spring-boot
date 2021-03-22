@@ -10,13 +10,15 @@ import com.roulette.masiv.repository.RouletteRepository;
 
 public class Bet implements Serializable{
 	
-	private static final String BLACK_COLOR = "black";
-	private static final String RED_COLOR ="red";
+	public static final String RED_COLOR ="red";
+	public static final String BLACK_COLOR ="black";
+	
 	private String idRoulette;
 	private byte number;
 	private String color;
 	private String idUser;
 	private float moneyBet;
+	private float moneytWinBet;
 	
 	private static Logger l = LoggerFactory.getLogger(Bet.class);
 	
@@ -34,15 +36,23 @@ public class Bet implements Serializable{
 		return false;
 	}
 	
+	public boolean isColorBetValid() {
+		return (color.equalsIgnoreCase(RED_COLOR) || color.equalsIgnoreCase(BLACK_COLOR));
+	}
+	
 	public boolean isValidAmountMoney(Roulette roulette) {
 		return ((roulette.getAmountMoneyBet() + moneyBet) <= Roulette.MAXIMUN_BET_VALUE );	
 	}
 	
-	public boolean isColorBetValid() {
-		return color.equalsIgnoreCase(RED_COLOR) || color.equalsIgnoreCase(BLACK_COLOR);
+	
+	public String getColor() {
+		return color;
 	}
-	
-	
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
 	public boolean isNumberBetValid() {
 		return number>=0 && number<=36;
 	}
@@ -65,16 +75,20 @@ public class Bet implements Serializable{
 	public void setNumber(byte number) {
 		this.number = number;
 	}
-	public String getColor() {
-		return color;
-	}
-	public void setColor(String color) {
-		this.color = color;
-	}
+	
 	public String getIdUser() {
 		return idUser;
 	}
 	public void setIdUser(String idUser) {
 		this.idUser = idUser;
 	}
+
+	public float getMoneytWinBet() {
+		return moneytWinBet;
+	}
+
+	public void setMoneytWinBet(float monetWinBet) {
+		this.moneytWinBet = monetWinBet;
+	}
+
 }

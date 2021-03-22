@@ -10,6 +10,8 @@ public interface IRouletteRepository {
 	boolean rouletteOpening(String idRoulette);
 	void doBet(Bet bet);
 	void saveBet(Bet bet);
+	Map<String,Bet> closeBets(String idRoulette);
+	
 	Map<String,Bet> findAllBets();
 	Map<String,Roulette> findAllRoulettes();
 	
