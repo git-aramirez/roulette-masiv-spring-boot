@@ -5,7 +5,8 @@ import java.util.ArrayList;
 
 public class Roulette implements Serializable{
 	
-	private static final double MAXIMUN_BET_VALUE =10000;
+	public static final double MAXIMUN_BET_VALUE =10000;
+	private double amountMoneyBet;
 	private boolean status;
 	private ArrayList<Bet> myBets;
 	
@@ -14,6 +15,18 @@ public class Roulette implements Serializable{
 		myBets = new ArrayList<>();
 	}
 	
+	public void saveBet(Bet bet) {
+		myBets.add(bet);
+	}
+	
+	public double getAmountMoneyBet() {
+		return amountMoneyBet;
+	}
+
+	public void setAmountMoneyBet(double amountMoneyBet) {
+		this.amountMoneyBet = amountMoneyBet;
+	}
+
 	public boolean rouletteOpening() {
 		if(status)
 			return false;

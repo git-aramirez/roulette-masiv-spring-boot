@@ -15,7 +15,7 @@ import com.roulette.masiv.domain.Roulette;
 
 
 @Repository
-public class RouletteRepository implements IRoulettleRepository{
+public class RouletteRepository implements IRouletteRepository{
 	
 	private static final String KEY_ROULETTE ="Roulette";
 	private static final String KEY_BET="Bet";
@@ -34,24 +34,32 @@ public class RouletteRepository implements IRoulettleRepository{
 	
 
 	@Override
-	public String save(Roulette roulette) {
+	public String saveRoulette(Roulette roulette) {
 		String id = UUID.randomUUID().toString();
 		hashOperations.put(KEY_ROULETTE,id, roulette);
 		return id;
 	}
 
 	@Override
-	public boolean roulettleOpening(String idRoulette) {
+	public boolean rouletteOpening(String idRoulette) {
 		Roulette roulette = (Roulette) hashOperations.get(KEY_ROULETTE, idRoulette);
 	    boolean status=roulette.rouletteOpening();
 	    hashOperations.put(KEY_ROULETTE,idRoulette, roulette);   
 	    return status;
 	}
-
+	
 	@Override
-	public void doBet(Bet bet, String idRoulette) {
-		// TODO Auto-generated method stub
-		
+	public void doBet(Bet bet) {
+		Roulette roulette = (Roulette) hashOperations.get(KEY_ROULETTE, bet.getIdRoulette());
+		if(bet.doBet(roulette))
+			roulette.saveBet(bet);
+			hashOperations.put(KEY_ROULETTE,bet.getIdRoulette(), roulette);
+			saveBet(bet);
+	}
+	
+	@Override
+	public void saveBet(Bet bet) {
+		hashOperations.put(KEY_BET,UUID.randomUUID().toString(), bet);
 	}
 
 	@Override
@@ -63,5 +71,7 @@ public class RouletteRepository implements IRoulettleRepository{
 	public Map<String, Roulette> findAllRoulettes() {
 		return hashOperations.entries(KEY_ROULETTE);
 	}
+
+	
 
 }

@@ -25,19 +25,18 @@ public class RouletteController {
 	
 	@PostMapping("/createRoulette")
 	public String createRoulettes(@RequestBody Roulette roulette) {
-		return rouletteRepository.save(roulette);
+		return rouletteRepository.saveRoulette(roulette);
 	}
 	
-	@PostMapping("/rouletteOpening/{id}")
-	public boolean rouletteOpening(@PathVariable String id) {
-		return rouletteRepository.roulettleOpening(id);
+	@PostMapping("/rouletteOpening/{idRoulette}")
+	public boolean rouletteOpening(@PathVariable String idRoulette) {
+		return rouletteRepository.rouletteOpening(idRoulette);
 	}
 	
-//	@PostMapping
-//	public void doBet(@RequestBody Bet bet,@PathVariable String id) {
-//		rouletteRepository.doBet(bet, id);
-//	}
-	
+	@PostMapping("/doBet")
+	public void doBet(@RequestBody Bet bet) {
+		rouletteRepository.doBet(bet);
+	}
 	
 	@GetMapping("/bets")
 	public Map<String,Bet> findAllBets(){
