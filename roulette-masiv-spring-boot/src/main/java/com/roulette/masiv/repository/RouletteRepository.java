@@ -1,4 +1,4 @@
-package com.roulettle.masiv.repository;
+package com.roulette.masiv.repository;
 
 
 import java.util.Map;
