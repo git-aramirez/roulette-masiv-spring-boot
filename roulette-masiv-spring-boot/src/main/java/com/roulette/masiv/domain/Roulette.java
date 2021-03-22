@@ -13,6 +13,13 @@ public class Roulette implements Serializable{
 		this.status=false;
 		myBets = new ArrayList<>();
 	}
+	
+	public boolean rouletteOpening() {
+		if(status)
+			return false;
+		setStatus(true);
+		return true;
+	}
 
 	public boolean isStatus() {
 		return status;

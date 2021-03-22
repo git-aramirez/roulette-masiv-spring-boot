@@ -21,7 +21,7 @@ public class RouletteRepository implements IRoulettleRepository{
 	private static final String KEY_BET="Bet";
 	
 	private RedisTemplate<String,Roulette> redisTemplate;
-	private HashOperations hashOperatations;
+	private HashOperations hashOperations;
 	
 	public RouletteRepository(RedisTemplate<String, Roulette> redisTemplate) {
 		this.redisTemplate=redisTemplate;
@@ -29,21 +29,23 @@ public class RouletteRepository implements IRoulettleRepository{
 	
 	@PostConstruct
 	private void init() {
-		hashOperatations = redisTemplate.opsForHash();
+		hashOperations = redisTemplate.opsForHash();
 	}
 	
 
 	@Override
 	public String save(Roulette roulette) {
 		String id = UUID.randomUUID().toString();
-		hashOperatations.put(KEY_ROULETTE,id, roulette);
+		hashOperations.put(KEY_ROULETTE,id, roulette);
 		return id;
 	}
 
 	@Override
 	public boolean roulettleOpening(String idRoulette) {
-		// TODO Auto-generated method stub
-		return false;
+		Roulette roulette = (Roulette) hashOperations.get(KEY_ROULETTE, idRoulette);
+	    boolean status=roulette.rouletteOpening();
+	    hashOperations.put(KEY_ROULETTE,idRoulette, roulette);   
+	    return status;
 	}
 
 	@Override
@@ -54,12 +56,12 @@ public class RouletteRepository implements IRoulettleRepository{
 
 	@Override
 	public Map<String, Bet> findAllBets() {
-		return hashOperatations.entries(KEY_BET);
+		return hashOperations.entries(KEY_BET);
 	}
 
 	@Override
 	public Map<String, Roulette> findAllRoulettes() {
-		return hashOperatations.entries(KEY_ROULETTE);
+		return hashOperations.entries(KEY_ROULETTE);
 	}
 
 }
