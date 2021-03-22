@@ -3,6 +3,7 @@ package com.roulette.masiv.repository;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -72,8 +73,13 @@ public class RouletteRepository implements IRouletteRepository{
 		roulette.closeBets();
 		hashOperations.put(KEY_ROULETTE,idRoulette, roulette);
 		
+		Map<String, Bet> map= hashOperations.entries(KEY_BET);
 		
-		return hashOperations.entries(KEY_BET);
+		Map<String, Bet> collect = map.entrySet().stream()
+		        .filter(x -> x.getValue().getIdRoulette().equals(idRoulette))
+		        .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
+		
+		return collect;
 	}
 
 	@Override
