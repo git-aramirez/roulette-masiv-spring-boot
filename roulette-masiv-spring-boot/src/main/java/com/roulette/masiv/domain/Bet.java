@@ -13,22 +13,25 @@ public class Bet implements Serializable{
 	private static final String BLACK_COLOR = "black";
 	private static final String RED_COLOR ="red";
 	private String idRoulette;
-	private int number;
+	private byte number;
 	private String color;
 	private String idUser;
-	private double moneyBet;
+	private float moneyBet;
 	
 	private static Logger l = LoggerFactory.getLogger(Bet.class);
 	
+	public Bet() {
+		this.number=-1;
+	}
+	
 	public boolean doBet(Roulette roulette) {
 		
-		boolean a = roulette!=null;
-		l.info("roulette != null "+a);
-		l.info("isNumberBetValid "+isNumberBetValid());
-		l.info("isColorBetValid "+isColorBetValid());
-		l.info("isValidAmountMoney "+isValidAmountMoney(roulette));
-		
-		return roulette!=null && isNumberBetValid() && isColorBetValid() && isValidAmountMoney(roulette);
+		if(roulette!=null && (isNumberBetValid() || isColorBetValid()) && isValidAmountMoney(roulette) && roulette.isStatus()) {
+			roulette.setAmountMoneyBet(roulette.getAmountMoneyBet()+this.getMoneyBet());
+			roulette.saveBet(this);
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean isValidAmountMoney(Roulette roulette) {
@@ -50,16 +53,16 @@ public class Bet implements Serializable{
 	public void setIdRoulette(String idRoulette) {
 		this.idRoulette = idRoulette;
 	}
-	public double getMoneyBet() {
+	public float getMoneyBet() {
 		return moneyBet;
 	}
-	public void setMoneyBet(double moneyBet) {
+	public void setMoneyBet(float moneyBet) {
 		this.moneyBet = moneyBet;
 	}
-	public int getNumber() {
+	public byte getNumber() {
 		return number;
 	}
-	public void setNumber(int number) {
+	public void setNumber(byte number) {
 		this.number = number;
 	}
 	public String getColor() {

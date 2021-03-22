@@ -56,9 +56,6 @@ public class RouletteRepository implements IRouletteRepository{
 	public void doBet(Bet bet) {
 		Roulette roulette = (Roulette) hashOperations.get(KEY_ROULETTE, bet.getIdRoulette());
 		if(bet.doBet(roulette)) {
-			l.info("entroooo");
-			roulette.setAmountMoneyBet(roulette.getAmountMoneyBet()+bet.getMoneyBet());
-			roulette.saveBet(bet);
 			hashOperations.put(KEY_ROULETTE,bet.getIdRoulette(), roulette);
 			saveBet(bet);
 		}

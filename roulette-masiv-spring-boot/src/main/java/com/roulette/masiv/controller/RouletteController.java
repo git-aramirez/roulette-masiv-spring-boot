@@ -28,7 +28,7 @@ public class RouletteController {
 		return rouletteRepository.saveRoulette(roulette);
 	}
 	
-	@PostMapping("/rouletteOpening/{idRoulette}")
+	@GetMapping("/rouletteOpening/{idRoulette}")
 	public boolean rouletteOpening(@PathVariable String idRoulette) {
 		return rouletteRepository.rouletteOpening(idRoulette);
 	}
