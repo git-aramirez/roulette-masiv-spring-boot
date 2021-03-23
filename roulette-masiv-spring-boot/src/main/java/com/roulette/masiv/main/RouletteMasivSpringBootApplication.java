@@ -9,7 +9,6 @@ import com.roulette.masiv.domain.Roulette;
 public class RouletteMasivSpringBootApplication {
 
 	public static void main(String[] args) {
-		System.out.println(Roulette.MAXIMUN_BET_VALUE);
 		SpringApplication.run(RouletteMasivSpringBootApplication.class, args);
 	}
 

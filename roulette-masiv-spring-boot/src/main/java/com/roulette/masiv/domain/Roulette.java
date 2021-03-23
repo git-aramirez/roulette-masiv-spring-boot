@@ -6,7 +6,11 @@ import java.util.Iterator;
 import java.util.Random;
 
 import org.springframework.data.redis.core.HashOperations;
+
+import com.roulette.masiv.repository.RouletteRepository;
+
 public class Roulette implements Serializable{
+	
 	
 	public static final double MAXIMUN_BET_VALUE =10000;
 	private static final byte MAXIMUN_NUMBER_BET = 36;
@@ -15,9 +19,10 @@ public class Roulette implements Serializable{
 	
 	private float amountMoneyBet;
 	private boolean status;
+	private byte winningNumber;
 	private ArrayList<Bet> myBets;
 	private ArrayList<Bet> myWinningBet;
-	private byte winningNumber;
+	
 	private Random random;
 	
 	public Roulette() {
@@ -57,6 +62,12 @@ public class Roulette implements Serializable{
 				myWinningBet.add(myBets.get(i));
 			}
 		}	
+	}
+	
+	public void updateBetsHashOperations(HashOperations hashOperations) {
+		for (int i = 0; i < myBets.size(); i++) {
+			hashOperations.put(RouletteRepository.KEY_BET, myBets.get(i).getIdBet(),myBets.get(i));
+		}
 	}
 	
 	public boolean isWinningAmountMoneyColor(String color, byte winningNumber) {

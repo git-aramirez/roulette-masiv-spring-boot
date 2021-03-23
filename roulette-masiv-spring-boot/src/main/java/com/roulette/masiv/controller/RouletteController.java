@@ -43,11 +43,6 @@ public class RouletteController {
 		return rouletteRepository.closeBets(idRoulette);
 	}
 	
-	@GetMapping("/bets")
-	public Map<String,Bet> findAllBets(){
-		return rouletteRepository.findAllBets();
-	}
-	
 	@GetMapping("/roulettes")
 	public Map<String, Roulette> findAllRoulettes(){
 		return rouletteRepository.findAllRoulettes();
