@@ -1,0 +1,1 @@
+This application consists of playing roulette. Each roulette wheel can have bets and several winning bets. Bets may be on a number or on a color. It clarified that the user who makes the bet can win for both elections. You can only place bets on roulettes that meet their status (true)
