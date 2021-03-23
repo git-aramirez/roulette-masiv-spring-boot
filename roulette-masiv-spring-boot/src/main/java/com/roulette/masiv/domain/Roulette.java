@@ -34,9 +34,10 @@ public class Roulette implements Serializable{
 	}
 	
 	public boolean rouletteOpening() {
-		if(status)
+		if(status) {
 			return false;
-		setStatus(true);
+		}
+		status=true;
 		return true;
 	}
 	
